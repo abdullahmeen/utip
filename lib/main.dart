@@ -28,6 +28,22 @@ class UTip extends StatefulWidget {
 }
 
 class _UTipState extends State<UTip> {
+  int _personCount = 1;
+
+  void increment() {
+    setState(() {
+      _personCount++;
+    });
+  }
+  void decrement() {
+    setState(() {
+      if (_personCount>0) {
+        
+        _personCount--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -40,24 +56,74 @@ class _UTipState extends State<UTip> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
+          Padding(
             padding: const EdgeInsets.all(08),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.inversePrimary,
-              borderRadius: BorderRadius.circular(18),
-              //buildthemecontext
-            ),
-            child: Column(
-              children: [
-                Text('Total Per Person', style: style),
-                Text(
-                  '\$29.9',
-                  style: style.copyWith(
-                    color: theme.colorScheme.onPrimary,
-                    fontSize: theme.textTheme.displaySmall?.fontSize,
+            child: Container(
+              padding: const EdgeInsets.all(08),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.inversePrimary,
+                borderRadius: BorderRadius.circular(18),
+                //buildthemecontext
+              ),
+              child: Column(
+                children: [
+                  Text('Total Per Person', style: style),
+                  Text(
+                    '\$29.9',
+                    style: style.copyWith(
+                      color: theme.colorScheme.onPrimary,
+                      fontSize: theme.textTheme.displaySmall?.fontSize,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+          ),
+          //form
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: theme.colorScheme.primary, width: 2),
+              ),
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.attach_money),
+                      labelText: 'Bill Amount',
+                    ),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      print('value $value');
+                    },
+                  ),
+                  //split bill area
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Split ", style: theme.textTheme.titleMedium),
+                      Row(
+                        children: [
+                          IconButton(
+                            color: theme.colorScheme.primary,
+                            onPressed: decrement,
+                            icon: Icon(Icons.remove),
+                          ),
+                          Text('$_personCount', style: theme.textTheme.titleMedium),
+                          IconButton(
+                            color: theme.colorScheme.primary,
+                            onPressed: increment,
+                            icon: Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

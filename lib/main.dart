@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:utip/widgets/person_counter.dart';
+import 'package:utip/widgets/tip_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,15 +32,17 @@ class UTip extends StatefulWidget {
 class _UTipState extends State<UTip> {
   int _personCount = 1;
 
+  double _tipPercentage = 0.0;
+
   void increment() {
     setState(() {
       _personCount++;
     });
   }
+
   void decrement() {
     setState(() {
-      if (_personCount>0) {
-        
+      if (_personCount > 0) {
         _personCount--;
       }
     });
@@ -102,8 +105,31 @@ class _UTipState extends State<UTip> {
                     },
                   ),
                   //split bill area
-                  PersonCounter(theme: theme, personCount: _personCount,
-                  onDecrement: decrement,onIncrement: increment,),
+                  PersonCounter(
+                    theme: theme,
+                    personCount: _personCount,
+                    onDecrement: decrement,
+                    onIncrement: increment,
+                  ),
+                  //== tip section ==
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Tip", style: theme.textTheme.titleMedium),
+                      Text("\$20", style: theme.textTheme.titleMedium),
+                    ],
+                  ),
+                  // ==tipslider text==
+                  Text('${(_tipPercentage * 100).round()}%'),
+                  //== tipslider==
+                  TipSlider(
+                    tipPercentage: _tipPercentage,
+                    onChanged: (double value) {
+                      setState(() {
+                        _tipPercentage = value;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
@@ -113,5 +139,4 @@ class _UTipState extends State<UTip> {
     );
   }
 }
-
 

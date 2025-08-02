@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:utip/widgets/bill_amount_field.dart';
 import 'package:utip/widgets/person_counter.dart';
+import 'package:utip/widgets/tip_row.dart';
 import 'package:utip/widgets/tip_slider.dart';
+import 'package:utip/widgets/total_per_person.dart';
 
 void main() {
   runApp(const MyApp());
@@ -72,29 +74,7 @@ class _UTipState extends State<UTip> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(08),
-            child: Container(
-              padding: const EdgeInsets.all(08),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.inversePrimary,
-                borderRadius: BorderRadius.circular(18),
-                //buildthemecontext
-              ),
-              child: Column(
-                children: [
-                  Text('Total Per Person', style: style),
-                  Text(
-                    '$total',
-                    style: style.copyWith(
-                      color: theme.colorScheme.onPrimary,
-                      fontSize: theme.textTheme.displaySmall?.fontSize,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          TotalPerPerson(theme: theme, style: style, total: total),
           //form
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -123,13 +103,7 @@ class _UTipState extends State<UTip> {
                     onIncrement: increment,
                   ),
                   //== tip section ==
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Tip", style: theme.textTheme.titleMedium),
-                      Text("$totaltip", style: theme.textTheme.titleMedium),
-                    ],
-                  ),
+                  RowTip(theme: theme, totaltip: totaltip),
                   // ==tipslider text==
                   Text('${(_tipPercentage * 100).round()}%'),
                   //== tipslider==
@@ -150,3 +124,6 @@ class _UTipState extends State<UTip> {
     );
   }
 }
+
+
+
